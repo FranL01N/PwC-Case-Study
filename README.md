@@ -1,514 +1,816 @@
-PwC × TUM Inventory Management Case Study — Adios
+# PwC × TUM Inventory Management Case Study — Adios
 
-Student analysis / portfolio project.
-This repository documents my analysis of the PwC × TUM inventory management case study for the fictional sports-goods retailer Adios. The current scope covers Tasks A–C: inventory transparency, root-cause analysis, and inventory optimization levers.
+> **Student analysis / portfolio project**  
+> This repository documents my analysis of the PwC × TUM Inventory Management Case Study for the fictional sports-goods retailer **Adios**.  
+>
+> The current scope covers **Tasks A–C: inventory transparency, root-cause analysis, and inventory optimization levers**.
 
-1. Business problem
+---
 
-Adios is facing cost pressure while sales are declining. Management therefore wants to reduce working capital and sees inventory as a key lever, but does not yet have sufficient transparency on where inventory is held or why excess stock exists.
+## 1. Business Problem
 
-The case asks three questions:
+Adios is facing increasing cost pressure while sales are declining. Management therefore wants to reduce working capital and sees inventory as a key lever.
 
-Task A — Inventory transparency: Create transparency on the supply network and inventory levels, identify where inventories are too high, calculate basic inventory KPIs, identify problematic products, and estimate inventory-reduction potential.
+However, the company currently lacks sufficient transparency on:
 
-Task B — Reasons for high inventory: Explain why high inventory occurs, including general drivers and fashion / retail-specific drivers, describe the mechanism from cause to excess stock, and link the causes to resulting costs.
+- where inventory is held,
+- which locations and products carry excessive stock,
+- why excess inventory has accumulated,
+- and which actions could reduce inventory efficiently.
 
-Task C — Inventory optimization levers: Translate the findings into concrete inventory-reduction measures, explain the cost-saving potential and additional cost / risk of each measure, and consider levers beyond core inventory management.
+The case therefore asks three main questions:
 
-Case brief source: PwC × TUM Inventory Management case study, pp. 24–27.
+### Task A — Inventory Transparency
 
-2. Analytical logic
+Create transparency on the supply network and inventory levels, identify where inventories are too high, calculate basic inventory KPIs, identify problematic products, and estimate inventory-reduction potential.
+
+### Task B — Reasons for High Inventory
+
+Explain why high inventory occurs, including general drivers and fashion / retail-specific drivers, describe the mechanism from cause to excess stock, and link those causes to resulting costs.
+
+### Task C — Inventory Optimization Levers
+
+Translate the findings into concrete inventory-reduction measures, explain potential cost savings and additional costs / risks, and consider levers beyond core inventory management.
+
+---
+
+## 2. Analytical Logic
 
 The analysis follows a three-step consulting logic:
 
-Create transparency before recommending actions.
-Build a clean Site × Product × Month dataset, map the network, calculate inventory KPIs, and quantify where the largest inventory opportunities exist.
+### 1. Create transparency before recommending actions
 
-Separate observed evidence from hypotheses.
-Diagnose whether excess inventory is associated with demand decline, local allocation mismatch, or intermittent / seasonal demand. Potential supply-side or policy causes are explicitly kept as hypotheses where the provided data cannot prove them.
+Build a clean **Site × Product × Month** dataset, map the supply network, calculate inventory KPIs, and quantify where the largest inventory opportunities exist.
 
-Convert root causes into implementable levers and quantify them without double counting.
-Separate dead stock from active excess, test whether locally stranded inventory can be reused at other warehouses, quantify residual stock that may require disposition, and reconcile all opportunities into one management-level financial view.
+### 2. Separate observed evidence from hypotheses
 
-3. Data preparation
+Investigate whether excess inventory is associated with:
 
-The Excel case file contains four input sheets:
+- demand decline,
+- local allocation mismatch,
+- intermittent / seasonal demand,
+- or other possible supply-side and inventory-policy drivers.
 
-Site data
+Potential causes that cannot be proven with the available dataset are explicitly treated as **hypotheses rather than confirmed root causes**.
 
-Products
+### 3. Convert root causes into implementable levers
 
-Demand
+Separate:
 
-Inventory
+- locally stranded dead stock,
+- active excess inventory,
+- and stock that could potentially be rebalanced across warehouses.
 
-Demand and inventory are merged on:
+The optimization measures are then reconciled into one management-level financial view to avoid double counting.
 
+---
+
+## 3. Data Preparation
+
+The Excel case file contains four main input sheets:
+
+- `Site data`
+- `Products`
+- `Demand`
+- `Inventory`
+
+Demand and inventory are merged using:
+
+```text
 Product Code × Site Code × Date
+```
 
-Product attributes and site attributes are then added to create the analytical dataset.
+Product attributes and site information are subsequently added to create the analytical dataset.
 
-The notebook includes validation checks for row counts, merge uniqueness, and missing key attributes. The resulting analysis dataset contains 1,800 monthly Site × Product observations.
+The notebook also performs validation checks for:
 
-4. Key assumptions and definitions
+- row counts,
+- merge uniqueness,
+- missing key attributes,
+- and key consistency.
 
-The analysis uses the latest complete year, 2025, as the main inventory-performance period and compares it with 2024 where trend evidence is required.
+The resulting analysis dataset contains:
 
-Months of Supply (MOS)
+**1,800 monthly Site × Product observations**
 
-MOS = Average Inventory / Average Monthly Demand
+---
 
-A 3.0-month target MOS is used as a case assumption for scenario analysis, not as a universal industry benchmark.
+## 4. Key Assumptions and Definitions
 
-Inventory turns
+The main inventory-performance analysis uses the latest complete year:
 
-Inventory Turns = Annual Demand / Average Inventory
+**Analysis year: 2025**
 
-Dead stock
+Where trend evidence is required, 2025 is compared with 2024.
+
+---
+
+### Months of Supply (MOS)
+
+**MOS = Average Inventory / Average Monthly Demand**
+
+A target of:
+
+**3.0 months of supply**
+
+is used as a **case assumption for scenario analysis**.
+
+It is not intended as a universal industry benchmark.
+
+---
+
+### Inventory Turns
+
+**Inventory Turns = Annual Demand / Average Inventory**
+
+---
+
+### Dead Stock
 
 A Site × Product position is classified as dead stock when:
 
+```text
 2025 Annual Demand = 0
 AND
 December 2025 Current Inventory > 0
+```
 
-This is a local warehouse definition. A product can be dead stock at one site while still having demand elsewhere in the network.
+This is deliberately defined at the **local warehouse level**.
 
-Excess inventory
+Therefore, a product may be dead stock at one warehouse while still having demand elsewhere in the network.
 
-For products with demand:
+---
 
-Target Inventory = Average Monthly Demand × Target MOS
+### Excess Inventory
 
-Excess Inventory = max(Average Inventory − Target Inventory, 0)
+For products with positive demand:
 
-Reduction Potential (€) = Excess Inventory × Product Value
+```text
+Target Inventory
+= Average Monthly Demand × Target MOS
+```
 
-Cost of capital
+```text
+Excess Inventory
+= max(Average Inventory − Target Inventory, 0)
+```
 
-A 10% WACC (Weighted Average Cost of Capital) is used as a case assumption:
+```text
+Reduction Potential (€)
+= Excess Inventory × Product Value
+```
 
+---
+
+### Weighted Average Cost of Capital (WACC)
+
+A **10% WACC** is used as a case assumption.
+
+```text
 Potential Annual Capital-Cost Effect
 = Inventory Reduction Potential × WACC
+```
 
-Task A — Inventory transparency and descriptive analysis
+---
 
-Question
+# Task A — Inventory Transparency and Descriptive Analysis
 
-Where is inventory held, which Site × Product positions are problematic, and how much inventory-reduction potential exists?
+## Question
 
-Approach
+**Where is inventory held, which Site × Product positions are problematic, and how much inventory-reduction potential exists?**
 
-Task A builds the baseline by:
+---
 
-visualizing production and warehouse locations;
+## Approach
 
-reviewing Hamburg demand and inventory trends as requested in the case;
+Task A establishes the analytical baseline by:
 
-calculating 2025 Site × Product KPIs;
+1. Visualizing production and warehouse locations.
+2. Reviewing Hamburg demand and inventory trends.
+3. Performing product-level drill-downs.
+4. Calculating 2025 Site × Product inventory KPIs.
+5. Identifying dead stock and high-MOS positions.
+6. Estimating inventory-reduction potential under the 3-month MOS assumption.
+7. Ranking warehouses by modeled opportunity.
 
-identifying dead stock and high-MOS positions;
+---
 
-estimating reduction potential under the 3-month MOS assumption;
+## Main Findings
 
-ranking sites by modeled opportunity.
+| Metric | Result |
+|---|---:|
+| Current inventory value | **€630,874** |
+| Dead-stock value | **€55,622** |
+| Dead-stock share of current inventory | **8.8%** |
+| Gross modeled reduction potential | **€194,670** |
+| Gross reduction potential vs. average inventory value | **31.5%** |
+| Gross annual capital-cost effect at 10% WACC | **€19,467** |
 
-Main findings
+---
 
-Metric
+### Gross Reduction Potential by Site
 
-Result
+| Rank | Site | Reduction Potential |
+|---:|---|---:|
+| 1 | Hamburg | **€47,960** |
+| 2 | Frankfurt | **€43,320** |
+| 3 | Munich | **€42,209** |
+| 4 | Berlin | **€36,189** |
+| 5 | Kassel | **€24,992** |
 
-Current inventory value
+---
 
-€630,874
+## Observed Pattern
 
-Dead-stock value
+Hamburg provides a visible example of the overall inventory problem:
 
-€55,622
+- demand declined,
+- while inventory did not adjust proportionally.
 
-Dead-stock share of current inventory
+Product-level drill-down also reveals sharp demand deterioration for products such as:
 
-8.8%
+- `Shoes_S3_Summer24`
+- `Jacket_J3_WorldCup24`
 
-Gross modeled reduction potential
+This suggests that inventory is reacting too slowly to changes in actual demand.
 
-€194,670
+---
 
-Gross reduction potential vs. average inventory value
+## Task A Conclusion
 
-31.5%
+The network contains a material inventory-reduction opportunity.
 
-Gross annual capital-cost effect at 10% WACC
+However, the initial **€194.7k gross opportunity** combines different types of stock.
 
-€19,467
+Before recommending disposal or reduction, it is necessary to distinguish between:
 
-Gross reduction potential by site
+- active excess inventory,
+- locally dead stock,
+- and inventory that may still be useful elsewhere in the network.
 
-Rank
+This becomes the focus of Tasks B and C.
 
-Site
+---
 
-Reduction potential
+# Task B — Reasons for High Inventory
 
-1
+## Question
 
-Hamburg
+**Why is inventory high, what mechanisms create excess stock, and what costs result?**
 
-€47,960
+---
 
-2
+## Approach
 
-Frankfurt
+Task B moves from **symptom → root cause** using four analytical tests.
 
-€43,320
+### Test 1 — Demand vs. Inventory Development
 
-3
+Compare 2024 → 2025:
 
-Munich
+- annual demand,
+- average inventory value,
+- and warehouse-level developments.
 
-€42,209
+### Test 2 — Local Dead Stock vs. Network Demand
 
-4
+Check whether SKUs classified as dead stock at one warehouse still have demand at other warehouses.
 
-Berlin
+### Test 3 — Intermittent / Seasonal Demand
 
-€36,189
+Identify active Site × Product positions with zero-demand months or highly uneven demand patterns.
 
-5
+### Test 4 — Evidence vs. Hypothesis
 
-Kassel
+Separate causes directly supported by the dataset from operational causes that would require additional data.
 
-€24,992
+The analysis also distinguishes between:
 
-Hamburg is a visible example of the problem: demand fell substantially while inventory did not adjust proportionally. Product-level drill-down also reveals sharp demand deterioration for products such as Shoes_S3_Summer24 and Jacket_J3_WorldCup24.
+- variable costs,
+- fixed / step-fixed costs,
+- mixed costs,
+- and implementation costs.
 
-Task A conclusion
+---
 
-The network contains a material inventory-reduction opportunity, but the gross €194.7k estimate mixes different types of inventory. Before recommending disposal, dead stock needs to be checked against demand elsewhere in the network and active excess must be separated from locally stranded stock.
-
-Task B — Reasons for high inventory
-
-Question
-
-Why is inventory high, what mechanisms create excess stock, and what costs result?
-
-Approach
-
-Task B moves from symptom to root cause using four tests:
-
-Compare 2024 → 2025 demand and average inventory value at network and site level.
-
-Check whether locally dead SKUs still have demand at other warehouses.
-
-Identify active Site × Product positions with intermittent or seasonal demand.
-
-Separate data-backed causes from hypotheses that require additional operational data.
-
-The analysis also classifies inventory-related costs as variable, fixed / step-fixed, mixed, or implementation costs.
-
-Main findings
-
-1. Inventory did not adjust to declining demand
+## Main Finding 1 — Inventory Did Not Adjust to Declining Demand
 
 From 2024 to 2025:
 
-Network demand changed −8.2%.
+| Metric | Change |
+|---|---:|
+| Network demand | **−8.2%** |
+| Average inventory value | **+5.1%** |
 
-Average inventory value changed +5.1%.
+Furthermore:
 
-4 of 5 warehouses show the clearest mismatch pattern: demand declined while inventory value increased.
+**4 of 5 warehouses**
 
-This is a strong signal that replenishment or inventory parameters did not respond quickly enough to demand changes. The exact planning cause cannot be proven without forecast and order data.
+show the clearest mismatch pattern:
 
-2. Local dead stock is partly an allocation problem
+> demand declined while inventory value increased.
+
+This provides strong evidence that inventory levels did not respond sufficiently to changing demand.
+
+The exact operational reason cannot be proven without forecast, replenishment, and order-history data.
+
+---
+
+## Main Finding 2 — Local Dead Stock Is Partly an Allocation Problem
 
 The analysis identifies:
 
-8 local dead-stock Site × Product positions
+**8 local dead-stock Site × Product positions**
 
-total value: €55,622
+with a combined value of:
 
-8 / 8 of the same SKUs still had demand at other warehouses in 2025
+**€55,622**
 
-This means the stock should not automatically be treated as obsolete at network level. The evidence supports a local allocation / cross-site rebalancing mismatch.
+However:
 
-3. Fashion demand creates residual-stock risk
+**8 / 8 of these SKUs still had demand at other warehouses in 2025.**
 
-There are 5 active Site × Product positions with zero-demand months during 2025. Several show highly intermittent demand, consistent with short selling windows, seasonal products, or event-driven products.
+This is an important distinction.
 
-4. Additional causes remain plausible but unproven
+The products are not necessarily obsolete at the **network level**.
 
-The case background makes the following drivers plausible:
+Instead, the evidence suggests a:
 
-long or volatile lead times;
+**local allocation / cross-site rebalancing mismatch**
 
-high safety-stock settings;
+where inventory remains at locations without demand while the same product is still demanded elsewhere.
 
-minimum order quantities or large order batches;
+---
 
-broader product-location complexity.
+## Main Finding 3 — Fashion Demand Creates Residual-Stock Risk
 
-However, lead-time history, service levels, safety-stock parameters, MOQ data, and order history are not available in the analyzed dataset, so these remain hypotheses rather than proven root causes.
+The analysis identifies:
 
-Cost implications
+**5 active Site × Product positions**
 
-At the 10% WACC assumption:
+with at least one zero-demand month during 2025.
 
-estimated annual financing cost of average inventory: ~€61,707
+Several show strongly intermittent demand patterns.
 
-estimated annual financing cost tied to dead stock: ~€5,562
+This is consistent with the characteristics of fashion and sporting-goods retail, where products may have:
 
-Other relevant costs include warehousing, handling, markdown / obsolescence, scrap, and transfer cost. Some of these are not immediately avoidable because warehouse rent and permanent capacity can be fixed or step-fixed.
+- short selling windows,
+- seasonal demand,
+- event-driven demand,
+- and rapid lifecycle changes.
 
-Task B conclusion
+Static replenishment policies can therefore create residual inventory when demand disappears faster than inventory policies adjust.
 
-The strongest evidence indicates that excess inventory is driven mainly by:
+---
 
-insufficient inventory response to falling demand;
+## Main Finding 4 — Additional Causes Are Plausible but Not Proven
 
-local allocation / rebalancing mismatch;
+Several additional inventory drivers are plausible:
 
-fashion-related intermittent and seasonal demand.
+- long or volatile lead times,
+- excessive safety-stock settings,
+- minimum order quantities,
+- large order batches,
+- product-location complexity,
+- and conservative service-level policies.
 
-Supply uncertainty and conservative inventory policies may contribute, but require additional operational data to validate.
+However, the available dataset does not contain:
 
-Task C — Inventory optimization levers
+- lead-time history,
+- service-level targets,
+- safety-stock parameters,
+- MOQ data,
+- supplier information,
+- or detailed order history.
 
-Question
+These factors are therefore treated as **hypotheses rather than confirmed causes**.
 
-Which actions can reduce inventory, how much value can they address, and what costs or risks accompany the measures?
+---
 
-Approach
+## Cost Implications
 
-Task C deliberately avoids treating all inventory opportunity as the same type of saving.
+Using the 10% WACC assumption:
 
-The gross opportunity is first split into two non-overlapping buckets:
+| Cost Indicator | Estimated Value |
+|---|---:|
+| Annual financing cost of average inventory | **~€61,707** |
+| Annual financing cost associated with dead stock | **~€5,562** |
 
-Opportunity bucket
+Additional relevant inventory costs include:
 
-Value
+- warehousing,
+- handling,
+- markdowns,
+- obsolescence,
+- scrapping,
+- and internal transfers.
 
-Share
+Not all of these costs are immediately avoidable.
 
-Dead stock
+For example, warehouse rent and permanent warehouse capacity may behave as **fixed or step-fixed costs** rather than fully variable costs.
 
-€55,622
+---
 
-28.6%
+## Task B Conclusion
 
-Active excess inventory
+The strongest evidence indicates three main drivers of excessive inventory:
 
-€139,048
+### 1. Insufficient inventory response to declining demand
 
-71.4%
+Inventory remained high even when demand declined.
 
-Total gross modeled opportunity
+### 2. Local allocation / rebalancing mismatch
 
-€194,670
+Products with no demand at one location may still be needed elsewhere.
 
-100%
+### 3. Fashion-related intermittent and seasonal demand
+
+Short product lifecycles and uneven demand increase the risk of residual inventory.
+
+Supply uncertainty and conservative inventory policies may also contribute, but additional operational data would be required to verify them.
+
+---
+
+# Task C — Inventory Optimization Levers
+
+## Question
+
+**Which actions can reduce inventory, how much value can they address, and what costs or risks accompany those measures?**
+
+---
+
+## Approach
+
+Task C deliberately avoids treating every inventory opportunity as the same type of saving.
+
+The gross opportunity is first separated into two non-overlapping inventory categories.
+
+| Opportunity Bucket | Value | Share |
+|---|---:|---:|
+| Dead stock | **€55,622** | **28.6%** |
+| Active excess inventory | **€139,048** | **71.4%** |
+| **Total gross modeled opportunity** | **€194,670** | **100%** |
 
 The analysis then:
 
-screens other warehouses as potential receivers for locally dead stock;
+1. Screens other warehouses as potential receivers for locally dead stock.
+2. Calculates receiving capacity relative to the 3-month inventory target.
+3. Builds a concrete source → receiver transfer plan.
+4. Separates reusable stock from residual dead stock.
+5. Ranks active excess by product and site.
+6. Links each lever to financial effects, implementation costs, and risks.
+7. Reconciles all measures to avoid double counting.
 
-calculates receiving capacity relative to the 3-month inventory target;
+---
 
-builds a concrete source → receiver transfer plan;
+## Lever 1 — Rebalance Usable Dead Stock Before Disposing of It
 
-separates remaining dead stock from stock that can be reused internally;
+The receiver-screening logic identifies:
 
-ranks active excess by product and site;
+**9 potential source → receiver pairs**
 
-links each lever to its financial effect, implementation cost, and risk;
+for locally dead stock.
 
-reconciles the results to avoid double counting.
+Of the total:
 
-Main findings
+**€55,622 local dead-stock value**
 
-1. Rebalance usable dead stock before disposing of it
+approximately:
 
-The receiver-screening logic identifies 9 potential source → receiver pairs.
+**€21,604**
 
-Of the €55,622 local dead stock:
+can potentially be rebalanced internally.
 
-€21,604 can potentially be rebalanced internally;
+This leaves:
 
-€34,018 remains as residual dead stock after the modeled transfers.
+**€34,018**
 
-The €21,604 transfer value is not counted as an immediate network inventory reduction, because the stock remains inside the company. Its benefit is potential future replenishment avoidance and lower obsolescence risk.
+as residual dead stock after the modeled transfers.
 
-2. Reduce active excess inventory
+---
 
-Active excess inventory represents €139,048 of modeled reduction potential.
+### Important Interpretation
 
-Active-excess opportunity by site:
+The **€21,604 transferred inventory is not counted as an immediate network inventory reduction**.
 
-Site
+The inventory still exists within Adios after the transfer.
 
-Active-excess reduction potential
+Its potential benefits instead include:
 
-Frankfurt
+- avoiding future replenishment at the receiving warehouse,
+- reducing future purchasing requirements,
+- decreasing obsolescence risk,
+- and improving inventory utilization.
 
-€37,572
+---
 
-Berlin
+## Lever 2 — Reduce Active Excess Inventory
 
-€30,693
+Active excess inventory represents:
 
-Munich
+**€139,048**
 
-€28,327
+of modeled direct reduction potential.
 
-Hamburg
+### Active-Excess Opportunity by Site
 
-€26,390
+| Site | Active-Excess Reduction Potential |
+|---|---:|
+| Frankfurt | **€37,572** |
+| Berlin | **€30,693** |
+| Munich | **€28,327** |
+| Hamburg | **€26,390** |
+| Kassel | **€16,066** |
 
-Kassel
+The recommended action is to:
 
-€16,066
+- reduce replenishment,
+- temporarily pause replenishment,
+- or lower future replenishment quantities
 
-The recommended measure is to reduce or temporarily pause replenishment for the highest-excess Site × Product positions until inventory approaches the modeled target, while checking demand and service requirements.
+for the largest excess Site × Product positions until inventory approaches the modeled target.
 
-3. Dispose of residual dead stock economically
+Any implementation should still consider:
 
-After modeled rebalancing, €34,018 of dead stock remains.
+- expected future demand,
+- product lifecycle,
+- and required service levels.
 
-Recommended sequence:
+---
 
-Internal reuse → Outlet / markdown → Scrap as last resort
+## Lever 3 — Dispose of Residual Dead Stock Economically
 
-At 10% WACC, removing the residual dead stock corresponds to approximately €3,402 annual capital-cost effect, before considering markdown recovery or disposal costs.
+After modeled internal rebalancing:
 
-4. Use intermittent-demand signals in replenishment
+**€34,018**
 
-Five active Site × Product positions contain zero-demand months; four of them also have active excess.
+of residual dead stock remains.
 
-The recommended policy is to explicitly use inactive periods and demand variability when setting replenishment timing instead of applying a static inventory rule.
+The recommended disposition sequence is:
 
-This potential is not added separately to the financial total because it overlaps with the active-excess bucket.
+```text
+Internal reuse
+      ↓
+Outlet / markdown
+      ↓
+Scrap as last resort
+```
 
-5. Final quantified opportunity
+At a 10% WACC, eliminating this residual inventory corresponds to an estimated annual capital-cost effect of:
+
+**~€3,402**
+
+before considering:
+
+- markdown revenue,
+- disposal costs,
+- or scrap recovery value.
+
+---
+
+## Lever 4 — Use Intermittent-Demand Signals in Replenishment
+
+The analysis identifies:
+
+**5 active Site × Product positions**
+
+with zero-demand months.
+
+Of these:
+
+**4 also have active excess inventory.**
+
+This suggests that replenishment logic should explicitly consider:
+
+- inactive demand periods,
+- demand variability,
+- product seasonality,
+- and product lifecycle signals.
+
+This lever is **not added separately to the quantified financial opportunity**, because its potential overlaps with the active-excess bucket.
+
+---
+
+# 5. Final Quantified Opportunity
 
 After distinguishing internal rebalancing from actual network inventory reduction:
 
-Metric
+| Metric | Result |
+|---|---:|
+| Gross modeled inventory opportunity | **€194,670** |
+| Stock potentially reusable through internal rebalancing | **€21,604** |
+| Direct network inventory-reduction opportunity | **€173,066** |
+| Potential annual capital-cost effect at 10% WACC | **€17,307** |
 
-Result
+The direct **€173.1k inventory-reduction opportunity** consists of:
 
-Gross modeled inventory opportunity
+```text
+€139.0k Active Excess Inventory
++
+€34.0k Residual Dead Stock
+=
+€173.1k Direct Network Inventory Reduction
+```
 
-€194,670
+The entire opportunity therefore reconciles as:
 
-Stock potentially reusable through internal rebalancing
+```text
+€21.6k Internal Rebalancing
++
+€173.1k Direct Network Reduction
+=
+€194.7k Gross Modeled Opportunity
+```
 
-€21,604
+This separation prevents internal transfers from being incorrectly counted as immediate inventory savings.
 
-Direct network inventory-reduction opportunity
+---
 
-€173,066
+# 6. Recommended Action Sequence
 
-Potential annual capital-cost effect at 10% WACC
+## Priority 1 — Stop Additional Excess Build-Up
 
-€17,307
-
-The direct €173.1k opportunity consists of:
-
-€139.0k active excess inventory
-
-€34.0k residual dead stock
-
-This reconciles exactly with the gross opportunity:
-
-€21.6k internal rebalancing
-+ €173.1k direct network reduction
-= €194.7k gross modeled opportunity
-
-6. Recommended action sequence
-
-Stop additional excess build-up
 Tighten or temporarily pause replenishment for the largest active-excess Site × Product positions.
 
-Reuse locally stranded stock
-Execute justified source → receiver transfers where other sites have demand and inventory below the modeled target.
+---
 
-Remove residual dead stock
-Use outlet / markdown channels first and scrap only stock that can no longer be sold economically.
+## Priority 2 — Reuse Locally Stranded Stock
 
-Introduce intermittent-demand replenishment rules
-Use zero-demand periods, demand variability, and product lifecycle signals in replenishment decisions.
+Execute justified source → receiver transfers when:
 
-Establish recurring inventory control
-Regularly review MOS, dead-stock share, active excess, and demand-versus-inventory development so that inventory does not rebuild after the initial reduction.
+- another warehouse has actual demand,
+- the receiving site is below its modeled inventory target,
+- and transfer economics are reasonable.
 
-7. What is not quantified
+---
 
-The available dataset is sufficient to estimate working-capital and capital-cost effects, but not all operational economics.
+## Priority 3 — Remove Residual Dead Stock
 
-The following effects are therefore deliberately left unquantified:
+Use:
 
-warehouse / storage cost reduction;
+1. outlet channels,
+2. markdowns,
+3. targeted promotions,
 
-handling cost reduction;
+before considering scrapping.
 
-cross-site transport cost;
+---
 
-markdown / outlet recovery;
+## Priority 4 — Introduce Intermittent-Demand Replenishment Rules
 
-scrap / disposal cost;
+Use:
 
-future replenishment avoided through rebalancing.
+- zero-demand periods,
+- demand variability,
+- seasonality,
+- and product lifecycle signals
 
-Quantifying these would require cost rates, shipment data, selling-price / discount data, disposal costs, and future purchase or replenishment plans.
+when deciding replenishment timing and quantities.
 
-8. Overall conclusion
+---
 
-The case is not simply a “too much inventory” problem.
+## Priority 5 — Establish Recurring Inventory Control
 
-The analysis shows a combination of:
+Management should continuously monitor:
 
-inventory reacting too slowly to demand decline;
+- Months of Supply (MOS),
+- dead-stock share,
+- active excess inventory,
+- inventory turns,
+- and demand-versus-inventory development.
 
-stock being held at locations where local demand has disappeared;
+The objective is not only to reduce current inventory, but also to prevent inventory from rebuilding after the initial reduction.
 
-seasonal / intermittent demand creating residual-stock risk.
+---
 
-Under the case assumptions, the analysis identifies approximately €173k of direct network inventory-reduction opportunity, equivalent to roughly €17.3k annual capital-cost effect at a 10% WACC, while another €21.6k of locally stranded stock may be reused elsewhere in the network rather than immediately disposed of.
+# 7. What Is Not Quantified
 
-The main management implication is therefore to combine immediate stock reduction with better cross-site allocation and more demand-responsive replenishment, rather than using blanket inventory cuts.
+The available dataset is sufficient to estimate:
 
-9. Repository structure
+- inventory value,
+- working-capital reduction,
+- and capital-cost effects.
 
+However, several operational effects cannot be quantified reliably with the available information.
+
+These include:
+
+- warehouse / storage cost reduction,
+- handling cost reduction,
+- cross-site transportation cost,
+- markdown / outlet recovery,
+- scrap / disposal cost,
+- and future replenishment avoided through rebalancing.
+
+Quantifying these effects would require additional information such as:
+
+- warehouse cost rates,
+- shipment and transportation data,
+- selling prices,
+- discount levels,
+- disposal costs,
+- and future purchase / replenishment plans.
+
+---
+
+# 8. Overall Conclusion
+
+The case is not simply a **"too much inventory"** problem.
+
+The analysis identifies a combination of three underlying issues:
+
+1. **Inventory reacts too slowly to declining demand.**
+2. **Stock remains at locations where local demand has disappeared.**
+3. **Seasonal and intermittent demand creates residual-stock risk.**
+
+Under the case assumptions, the analysis identifies approximately:
+
+**€173k of direct network inventory-reduction opportunity**
+
+corresponding to approximately:
+
+**€17.3k annual capital-cost effect at a 10% WACC**
+
+while another:
+
+**€21.6k of locally stranded inventory**
+
+may potentially be reused elsewhere in the network instead of immediately being disposed of.
+
+The main management implication is therefore to combine:
+
+**immediate inventory reduction**
+
+with:
+
+**better cross-site allocation**
+
+and:
+
+**more demand-responsive replenishment**
+
+rather than applying a uniform inventory cut across the network.
+
+---
+
+# 9. Repository Structure
+
+```text
 .
 ├── pwc.ipynb
 ├── 202601_TUM Inventory Case Study Data.xlsx
 ├── 2026_2101_Inventory Case_TUM.pdf
 └── outputs/
-    ├── B*.csv / B*.png
-    ├── C*.csv / C*.png
+    ├── B*.csv
+    ├── B*.png
+    ├── C*.csv
+    ├── C*.png
     └── ...
+```
 
-The notebook is designed to be run from either the project root or a notebooks/ folder. It resolves the project root automatically and saves generated analysis outputs to outputs/.
+The notebook automatically resolves the project root and saves generated analytical outputs to:
 
-10. How to run
+```text
+outputs/
+```
+
+---
+
+# 10. How to Run
 
 Recommended Python packages:
 
+```bash
 pip install pandas matplotlib plotly openpyxl
+```
 
-Then open and run:
+Then open:
 
+```text
 pwc.ipynb
+```
 
-Run the notebook top-to-bottom so that Task B inherits the KPI tables created in Task A and Task C inherits the validated outputs from Tasks A and B.
+and run the notebook:
 
-11. Current project status
+```text
+top → bottom
+```
 
-Task A — Inventory transparency and descriptive analysis
+Task B uses KPI tables generated in Task A, while Task C builds on the validated outputs from Tasks A and B.
 
-Task B — Root-cause analysis
+---
 
-Task C — Inventory optimization levers
+# 11. Current Project Status
 
-Management-ready final presentation / executive storyline
+- [x] Task A — Inventory transparency and descriptive analysis
+- [x] Task B — Root-cause analysis
+- [x] Task C — Inventory optimization levers
+- [ ] Task D — Management presentation / executive storyline
+
+---
+
+## Disclaimer
+
+This repository is a student case-study analysis based on materials provided for the **PwC × TUM Inventory Management Case Study**.
+
+All quantitative optimization results depend on the assumptions described above, particularly the **3-month MOS target** and **10% WACC assumption**, and should therefore be interpreted as scenario-based analytical estimates rather than universal inventory benchmarks.
