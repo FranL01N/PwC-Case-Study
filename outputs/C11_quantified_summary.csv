@@ -1,0 +1,6 @@
+Metric,Value_EUR,Interpretation
+Gross modeled inventory reduction potential,194669.6666666667,Original 3-month MOS case baseline before deciding how dead stock should be treated
+Dead stock suitable for internal rebalancing,21604.0,Stock can potentially be reused elsewhere; this is not an immediate network inventory reduction
+Direct network inventory reduction opportunity,173065.6666666667,Active excess plus residual dead stock after internal rebalancing
+Potential annual capital-cost effect,17306.56666666667,Calculated using the case WACC assumption of 10.0%
+Reconciliation gap,0.0,Should be close to zero; small differences can result from unit-level allocation or rounding

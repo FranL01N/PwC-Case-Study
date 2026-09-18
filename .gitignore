@@ -1,0 +1,21 @@
+# Virtual environment
+pwc_inventory_env/
+
+# Original workshop materials
+2026_2101_Inventory Case_TUM.pdf
+202601_TUM Inventory Case Study Data.xlsx
+
+# PowerPoint working files
+*.pptx
+~$*.pptx
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

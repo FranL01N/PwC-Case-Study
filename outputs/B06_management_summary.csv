@@ -1,0 +1,5 @@
+Priority,Finding,Evidence,Interpretation,Confidence
+1,Inventory did not adjust to declining demand,Network demand -8.2% while average inventory value +5.1%.,Inventory or replenishment parameters appear insufficiently responsive to changing demand.,Strong data signal
+2,Inventory is stranded at the wrong locations,"8 local dead-stock positions worth €55,622; 8/8 corresponding SKUs still have demand elsewhere.",Cross-site allocation or stock rebalancing appears insufficient.,Direct evidence
+3,Seasonal demand creates residual-stock risk,5 active Site × Product positions show zero-demand months in 2025.,Short selling windows increase the risk of inventory remaining after demand disappears.,Direct demand pattern
+4,Supply and inventory-policy drivers require validation,"Lead-time, safety-stock, MOQ and order history are not available in the current analysis dataset.",Supply uncertainty and conservative inventory policies remain plausible drivers but cannot yet be quantified.,Hypothesis

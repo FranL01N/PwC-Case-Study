@@ -1,0 +1,7 @@
+Cost,Behavior,Reason,Inventory_Reduction_Effect
+Working capital / financing cost,Variable,More inventory ties up more capital.,Inventory reduction directly reduces capital tied up and therefore financing cost.
+Warehouse rent / permanent capacity,Fixed / step-fixed,Warehouse buildings or contracted capacity remain even after moderate inventory reduction.,Savings occur only when enough space can actually be released.
+External / overflow storage,Variable / step-variable,"External storage fees often depend on used pallets, space or storage duration.",Costs can decline relatively quickly when inventory is removed.
+Handling,Mixed,"Receiving, moving and counting stock creates activity-related workload.","Variable handling activity may decrease, while permanent labor remains fixed."
+Markdown / obsolescence / scrap,Variable / one-off,Unsold fashion products lose economic value as their selling window closes.,Better planning avoids future markdowns and write-offs; disposal may itself create one-off cost.
+Inventory rebalancing transport,Variable / implementation cost,Moving stock between sites generates transport and handling cost.,The implementation cost must be compared with the value recovered from stranded inventory.

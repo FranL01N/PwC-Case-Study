@@ -1,0 +1,7 @@
+Effect,Why_Not_Quantified
+Warehouse / storage cost reduction,No warehouse cost rate or capacity-cost data provided
+Handling cost reduction,No handling cost per unit / movement provided
+Rebalancing transport cost,No lane-specific transport rates or shipment-size data provided
+Markdown / outlet recovery,"No selling price, discount rate or recovery rate provided"
+Scrapping cost,No disposal cost rate provided
+Future replenishment avoided through rebalancing,No purchase-order or future replenishment plan provided

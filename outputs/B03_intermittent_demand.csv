@@ -1,0 +1,6 @@
+Site Code,Site City,Product Code,Product variant,Annual_Demand,Average_Monthly_Demand,Demand_Std,Zero_Demand_Months,Demand_CV
+WH_Germany_Hamburg_Harburg,Hamburg,Hat_H2_SpecialLine,H2_SpecialLine,395,32.916666666666664,77.58333740194631,10,2.356962148919888
+WH_Germany_Hamburg_Harburg,Hamburg,Jacket_J3_WorldCup24,J3_WorldCup24,817,68.08333333333333,159.72730075369273,10,2.346055825023639
+WH_Germany_Kassel_Hub,Kassel,Hat_H3_CapMen,H3_CapMen,448,37.333333333333336,87.45838837395586,10,2.3426354028738174
+WH_Germany_Hamburg_Harburg,Hamburg,Pants_P3_Beach,P3_Beach,1096,91.33333333333333,113.88058604866714,7,1.2468677304598592
+WH_Germany_Hamburg_Harburg,Hamburg,Jacket_J2_Winter,J2_Winter,1539,128.25,117.45337566262391,5,0.9158157946403424

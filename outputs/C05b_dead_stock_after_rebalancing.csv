@@ -1,0 +1,9 @@
+Source_Site_Code,Source_Site_City,Product Code,Product variant,Unit_Value_EUR,Source_Inventory_UoM,Source_Inventory_Value_EUR,Allocated_UoM,Residual_Dead_Stock_UoM,Residual_Dead_Stock_Value_EUR
+WH_Germany_Berlin_Charlottenburg,Berlin,Pants_P1_Performance,P1_Performance,12,458,5496,12.0,446.0,5352.0
+WH_Germany_Frankfurt_FFM-Süd,Frankfurt,Jacket_J2_Winter,J2_Winter,12,479,5748,162.0,317.0,3804.0
+WH_Germany_Hamburg_Harburg,Hamburg,Shoes_S3_Summer24,S3_Summer24,30,719,21570,599.0,120.0,3600.0
+WH_Germany_Kassel_Hub,Kassel,Shirt_TS1_Casual,TS1_Casual,10,532,5320,34.0,498.0,4980.0
+WH_Germany_Kassel_Hub,Kassel,Shirt_TS3_Luxury,TS3_Luxury,6,601,3606,53.0,548.0,3288.0
+WH_Germany_Munich_Maxvorstadt,Munich,Hat_H2_SpecialLine,H2_SpecialLine,4,424,1696,0.0,424.0,1696.0
+WH_Germany_Munich_Maxvorstadt,Munich,Jacket_J1_AllYear,J1_AllYear,15,542,8130,0.0,542.0,8130.0
+WH_Germany_Munich_Maxvorstadt,Munich,Pants_P3_Beach,P3_Beach,8,507,4056,111.0,396.0,3168.0

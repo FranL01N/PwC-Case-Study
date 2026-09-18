@@ -1,0 +1,9 @@
+Site Code,Site City,Product Code,Product variant,Annual_Demand,Current_Inventory,Current_Inventory_Value_EUR,Last_Sold,Network_Demand_2025,Other_Sites_Demand_2025,Demand_Elsewhere
+WH_Germany_Hamburg_Harburg,Hamburg,Shoes_S3_Summer24,S3_Summer24,0,719,21570,2024-08-01,12107,12107,True
+WH_Germany_Munich_Maxvorstadt,Munich,Jacket_J1_AllYear,J1_AllYear,0,542,8130,2024-12-01,6066,6066,True
+WH_Germany_Frankfurt_FFM-Süd,Frankfurt,Jacket_J2_Winter,J2_Winter,0,479,5748,2024-06-01,7634,7634,True
+WH_Germany_Berlin_Charlottenburg,Berlin,Pants_P1_Performance,P1_Performance,0,458,5496,2024-10-01,6082,6082,True
+WH_Germany_Kassel_Hub,Kassel,Shirt_TS1_Casual,TS1_Casual,0,532,5320,2024-12-01,8109,8109,True
+WH_Germany_Munich_Maxvorstadt,Munich,Pants_P3_Beach,P3_Beach,0,507,4056,2024-12-01,6608,6608,True
+WH_Germany_Kassel_Hub,Kassel,Shirt_TS3_Luxury,TS3_Luxury,0,601,3606,2024-12-01,5815,5815,True
+WH_Germany_Munich_Maxvorstadt,Munich,Hat_H2_SpecialLine,H2_SpecialLine,0,424,1696,2024-06-01,3380,3380,True
